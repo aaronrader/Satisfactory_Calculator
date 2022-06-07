@@ -16,6 +16,18 @@ public class Recipe implements Comparable<Recipe>{
         outputParts = dbm.getPartList(this.name, 2);
     }
 
+    public Recipe(String name, String building, String type, Map<Part, Double> inParts, Map<Part, Double> outParts) throws Exception {
+        this.name = name;
+        this.building = building;
+        switch (type.toLowerCase()) {
+            case "input" -> this.type = 1;
+            case "output" -> this.type = 2;
+            default -> throw new InvalidTypeException(type);
+        }
+        this.inputParts = inParts;
+        this.outputParts = outParts;
+    }
+
     public String getName() {
         return name;
     }
@@ -39,5 +51,12 @@ public class Recipe implements Comparable<Recipe>{
     @Override
     public int compareTo(Recipe o) {
         return this.name.compareTo(o.getName());
+    }
+
+    static class InvalidTypeException extends Exception {
+        public InvalidTypeException(String type) {
+            super("\"" + type + "\" is not a valid Recipe ingredient type.");
+            System.out.println(this.getMessage());
+        }
     }
 }
