@@ -53,7 +53,7 @@ public class Recipe implements Comparable<Recipe>{
         return this.name.compareTo(o.getName());
     }
 
-    static class InvalidTypeException extends Exception {
+    private static class InvalidTypeException extends Exception {
         public InvalidTypeException(String type) {
             super("\"" + type + "\" is not a valid Recipe ingredient type.");
             System.out.println(this.getMessage());
