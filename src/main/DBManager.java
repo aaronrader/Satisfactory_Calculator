@@ -1,7 +1,9 @@
+package main;
+
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Vector;
 
 class DBManager {
     private static Connection connection;
@@ -23,8 +25,8 @@ class DBManager {
 
     This is the default no-arg method for makePartList, which is used to populate a list of all parts in a database
      */
-    public Vector<Part> getPartList() {
-        Vector<Part> partList = new Vector<>();
+    public ArrayList<Part> getPartList() {
+        ArrayList<Part> partList = new ArrayList<>();
         try {
             ResultSet rs = connection.createStatement().executeQuery(
                     "SELECT p.Part, pt.Type FROM Part p\n" +
@@ -68,6 +70,19 @@ class DBManager {
             }
         } catch (Exception e) {e.printStackTrace();}
         return partList;
+    }
+
+    public ArrayList<Recipe> getRecipeList() {
+        ArrayList<Recipe> recipeList = new ArrayList<>();
+        try {
+            ResultSet rs = connection.createStatement().executeQuery(
+                    "SELECT r.Recipe FROM Recipe r;");
+            while (rs.next()) {
+                //1 - RecipeName
+                recipeList.add(new Recipe(rs.getString(1), this));
+            }
+        } catch (Exception e) {e.printStackTrace();}
+        return recipeList;
     }
 
     /*

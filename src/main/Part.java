@@ -1,3 +1,5 @@
+package main;
+
 public record Part(String name, String type) implements Comparable<Part> {
     public Part(String name, String type) {
         this.name = name.trim();
