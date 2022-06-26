@@ -29,7 +29,7 @@ class DBManager {
         ArrayList<Part> partList = new ArrayList<>();
         try {
             ResultSet rs = connection.createStatement().executeQuery(
-                    "SELECT p.Part, pt.Type FROM Part p\n" +
+                    "SELECT p.main.Part, pt.Type FROM main.Part p\n" +
                     "INNER JOIN PartType pt ON p.Type = pt.TypeID;");
             while (rs.next()) {
                 //1 - PartName, 2 - PartType
@@ -55,13 +55,13 @@ class DBManager {
         Map<Part, Double> partList = new TreeMap<>();
         try {
             ResultSet rs = connection.createStatement().executeQuery(
-                    "SELECT p.Part, pt.Type, rp.Amount\n" +
-                            "FROM Recipe_Part rp INNER JOIN Recipe r\n" +
-                            "ON rp.Recipe = r.RecipeID INNER JOIN Recipe_Part_Type rpt\n" +
-                            "ON rp.Type = rpt.TypeID INNER JOIN Part p\n" +
-                            "ON rp.Part = p.PartID INNER JOIN PartType pt\n" +
+                    "SELECT p.main.Part, pt.Type, rp.Amount\n" +
+                            "FROM Recipe_Part rp INNER JOIN main.Recipe r\n" +
+                            "ON rp.main.Recipe = r.RecipeID INNER JOIN Recipe_Part_Type rpt\n" +
+                            "ON rp.Type = rpt.TypeID INNER JOIN main.Part p\n" +
+                            "ON rp.main.Part = p.PartID INNER JOIN PartType pt\n" +
                             "ON p.Type = pt.TypeID\n" +
-                            "WHERE r.Recipe = '" + recipeName +
+                            "WHERE r.main.Recipe = '" + recipeName +
                             "' AND rpt.Type = '" + ((type == 1) ? "Input" : "Output") + "';");
             while (rs.next()) {
                 //1 - PartName, 2 - PartType, 3 - Amount
@@ -98,8 +98,8 @@ class DBManager {
         try {
             ResultSet rs = connection.createStatement().executeQuery(
                     "SELECT r.RecipeType\n" +
-                            "FROM Recipe r\n" +
-                            "WHERE r.Recipe = '" + recipeName + "';");
+                            "FROM main.Recipe r\n" +
+                            "WHERE r.main.Recipe = '" + recipeName + "';");
             while (rs.next()) {
                 type = rs.getInt(1);
             }
@@ -116,10 +116,10 @@ class DBManager {
         String buildingName = null;
         try {
             ResultSet rs = connection.createStatement().executeQuery(
-                    "SELECT b.Building\n" +
-                            "FROM Building b INNER JOIN Recipe r\n" +
-                            "ON r.Building = b.BuildingID\n" +
-                            "WHERE r.Recipe = '" + recipeName + "';");
+                    "SELECT b.main.Building\n" +
+                            "FROM main.Building b INNER JOIN main.Recipe r\n" +
+                            "ON r.main.Building = b.BuildingID\n" +
+                            "WHERE r.main.Recipe = '" + recipeName + "';");
             while (rs.next()) {
                 buildingName = rs.getString(1);
             }
