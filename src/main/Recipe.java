@@ -1,3 +1,5 @@
+package main;
+
 import java.util.Map;
 
 public class Recipe implements Comparable<Recipe>{
@@ -22,7 +24,7 @@ public class Recipe implements Comparable<Recipe>{
         switch (type.toLowerCase()) {
             case "input" -> this.type = 1;
             case "output" -> this.type = 2;
-            default -> throw new InvalidTypeException(type);
+            default -> throw new Exception("\"" + type + "\" is not a valid main.Recipe ingredient type.");
         }
         this.inputParts = inParts;
         this.outputParts = outParts;
@@ -51,12 +53,5 @@ public class Recipe implements Comparable<Recipe>{
     @Override
     public int compareTo(Recipe o) {
         return this.name.compareTo(o.getName());
-    }
-
-    private static class InvalidTypeException extends Exception {
-        public InvalidTypeException(String type) {
-            super("\"" + type + "\" is not a valid Recipe ingredient type.");
-            System.out.println(this.getMessage());
-        }
     }
 }
