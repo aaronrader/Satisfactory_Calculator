@@ -19,12 +19,12 @@ class DBManager {
     }
 
     /*
-    Method:     getPartList
-    Input:      nothing!
-    Output:     Vector  - of all parts in the database
+        Method:     getPartList()
+        Input:      nothing!
+        Output:     Vector  - of all parts in the database
 
-    This is the default no-arg method for makePartList, which is used to populate a list of all parts in a database
-     */
+        This is the default no-arg method for makePartList, which is used to populate a list of all parts in a database
+         */
     public ArrayList<Part> getPartList() {
         ArrayList<Part> partList = new ArrayList<>();
         try {
@@ -33,7 +33,7 @@ class DBManager {
                     "INNER JOIN PartType pt ON p.Type = pt.TypeID;");
             while (rs.next()) {
                 //1 - PartName, 2 - PartType
-                partList.add(new Part(rs.getString(0), rs.getString(1)));
+                partList.add(new Part(rs.getString(1), rs.getString(2)));
             }
         } catch (Exception e) {e.printStackTrace();}
         return partList;
@@ -72,6 +72,11 @@ class DBManager {
         return partList;
     }
 
+    /*
+    Method:     getRecipeList()
+    Input:      Nothing!
+    Output:     ArrayList<Recipe>   - a list of recipes
+     */
     public ArrayList<Recipe> getRecipeList() {
         ArrayList<Recipe> recipeList = new ArrayList<>();
         try {
